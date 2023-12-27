@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import CardsView from "./CardsView";
 import IconSwitch from "./IconSwitch";
 import ListView from "./ListView";
-export default function Store({ products }) {
 
+function Store({ products }) {
     const cards = products.map((cards) => cards);
     const items = products.map((items) => items);
     const iconViewList = <span className="material-icons">view_list</span>;
@@ -13,15 +13,13 @@ export default function Store({ products }) {
         console.log(icon.props.children)
         icon.props.children === "view_list" ? setIcon(iconViewModule) : setIcon(iconViewList)
     }
+    const View = icon.props.children === "view_list" ? CardsView : ListView;
     return (
-        icon.props.children === "view_list" ?
-            <div className="container">
-                <IconSwitch icon={icon} onSwitch={onIconSwitch} />
-                <CardsView cards={cards} />
-            </div> :
-            <div className="container">
-                <IconSwitch icon={icon} onSwitch={onIconSwitch} />
-                <ListView items={items} />
-            </div>
+        <div className="container">
+            <IconSwitch icon={icon} onSwitch={onIconSwitch} />
+            <View items={items} cards={cards} />
+        </div>
     )
 }
+
+export default Store;
